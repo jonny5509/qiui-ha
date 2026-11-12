@@ -1,0 +1,110 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "QIUI developer account",
+        "description": "Enter the client id from your QIUI developer account at {url}.\n\nCreate an application in the developer console to get a `clientId`, then approve it for the production environment.",
+        "data": {
+          "client_id": "Client ID",
+          "environment": "Environment"
+        }
+      },
+      "bluetooth_credentials": {
+        "title": "Set up {name}",
+        "description": "Home Assistant found **{name}** ({address}) over Bluetooth.\n\nDetected model: {model}.\n\nEnter the client id from your QIUI developer account at {url}. The device is bound to your account and its serial number is read from the platform.",
+        "data": {
+          "client_id": "Client ID",
+          "environment": "Environment",
+          "name": "Name"
+        }
+      },
+      "bluetooth_confirm": {
+        "title": "Add {name}",
+        "description": "Home Assistant found **{name}** ({address}) over Bluetooth.\n\nDetected model: {model}. The integration binds the device to your QIUI account and asks the platform for its serial number and exact model.",
+        "data": {
+          "name": "Name"
+        }
+      },
+      "device": {
+        "title": "Add a QIUI device",
+        "description": "Pick one of the {count} nearby Bluetooth devices. Devices that advertise a QIUI service are listed first.\n\nIf your device is not listed, wake it up (for example press its button), reopen this dialog, or choose *Enter a Bluetooth address manually*.",
+        "data": {
+          "bluetooth_address": "Device",
+          "name": "Name"
+        }
+      },
+      "device_manual": {
+        "title": "Add a QIUI device",
+        "description": "Enter the Bluetooth address (MAC) of the device. The integration asks the QIUI platform for its serial number and model.\n\nIf the platform does not know the device yet, fill in the model and serial number manually.",
+        "data": {
+          "bluetooth_address": "Bluetooth address",
+          "name": "Name",
+          "type_id": "Model",
+          "serial_number": "Serial number"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Re-authenticate QIUI",
+        "description": "The QIUI platform stopped accepting the stored credentials. Enter your developer client id again.",
+        "data": {
+          "client_id": "Client ID",
+          "environment": "Environment"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "The client id was rejected. Check that the application is approved for this environment.",
+      "cannot_connect": "Could not reach the QIUI platform. Check your internet connection and try again.",
+      "unknown": "Unexpected error, check the Home Assistant log for details.",
+      "invalid_address": "Enter a Bluetooth address in the form AA:BB:CC:DD:EE:FF.",
+      "device_not_found": "No device with that Bluetooth address is bound to the platform. Fill in the model and serial number manually, then try again.",
+      "model_required": "The platform did not report the model. Select the model manually, then try again.",
+      "unsupported_device": "This model is not supported by the public QIUI API.",
+      "serial_required": "The serial number is required because the platform did not return one."
+    },
+    "abort": {
+      "already_configured": "This device is already configured.",
+      "reauth_successful": "Re-authentication was successful.",
+      "unknown": "Unexpected error, check the Home Assistant log for details.",
+      "unsupported_device": "This model is not supported by the public QIUI API."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "QIUI options",
+        "description": "Fine tune the connection. The defaults work for almost every device.\n\nOnly change the Bluetooth UUIDs if the integration cannot find the characteristics of your device.",
+        "data": {
+          "transport": "Transport",
+          "allow_dangerous_actions": "Enable shock actions",
+          "write_token": "Write the handshake token before each command",
+          "response_timeout": "Response timeout",
+          "command_format": "Command payload format",
+          "service_uuid": "Bluetooth service UUID",
+          "write_uuid": "Write characteristic UUID",
+          "notify_uuid": "Notify characteristic UUID"
+        }
+      }
+    }
+  },
+  "services": {
+    "send_command": {
+      "name": "Send command",
+      "description": "Send a raw QIUI command to a device. Useful for testing models and firmware that are not fully covered by the integration.",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "The QIUI device to control."
+        },
+        "command": {
+          "name": "Command",
+          "description": "Command name, for example `unlock`, `lock`, `shock_1s` or `vibration`."
+        },
+        "parameters": {
+          "name": "Parameters",
+          "description": "Extra parameters for the command, for example `{\"shockVolt\": 2, \"shockModel\": 1}`."
+        }
+      }
+    }
+  }
+}

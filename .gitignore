@@ -1,0 +1,10 @@
+# Machine / tooling
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# ESPHome credentials
+esphome/secrets.yaml

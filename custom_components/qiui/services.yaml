@@ -1,0 +1,30 @@
+service: send_command
+name: Send command
+description: >-
+  Send a raw QIUI command to a device. The command has to be supported by the
+  device family; use the diagnostic sensor or the log to see what happened.
+fields:
+  device_id:
+    name: Device
+    description: The QIUI device to control.
+    required: true
+    selector:
+      device:
+        integration: qiui
+  command:
+    name: Command
+    description: >-
+      Command name, for example `unlock`, `lock`, `shock_1s`, `shake_now` or
+      `vibration`.
+    required: true
+    example: unlock
+    selector:
+      text:
+  parameters:
+    name: Parameters
+    description: >-
+      Extra parameters for the command, for example
+      `{"shockVolt": 2, "shockModel": 1}`.
+    required: false
+    selector:
+      object:

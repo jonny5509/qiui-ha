@@ -1,0 +1,31 @@
+{
+  "domain": "qiui",
+  "name": "QIUI",
+  "codeowners": ["@walte"],
+  "config_flow": true,
+  "dependencies": ["bluetooth"],
+  "bluetooth": [
+    {
+      "service_uuid": "0000fff0-0000-1000-8000-00805f9b34fb",
+      "connectable": true
+    },
+    {
+      "service_uuid": "0000fee7-0000-1000-8000-00805f9b34fb",
+      "connectable": true
+    },
+    {
+      "service_uuid": "0000fee5-0000-1000-8000-00805f9b34fb",
+      "connectable": true
+    },
+    {
+      "service_uuid": "0000ac3a-0000-1000-8000-00805f9b34fb",
+      "connectable": true
+    }
+  ],
+  "documentation": "https://github.com/walte/ha-qiui",
+  "integration_type": "device",
+  "iot_class": "assumed_state",
+  "issue_tracker": "https://github.com/walte/ha-qiui/issues",
+  "loggers": ["custom_components.qiui"],
+  "version": "0.2.0"
+}

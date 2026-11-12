@@ -1,0 +1,67 @@
+# ESPHome Bluetooth proxy for the QIUI Home Assistant integration.
+#
+# Flash this to an ESP32 that is within a few metres of the QIUI device.
+# Home Assistant keeps talking to the QIUI cloud; this board only relays the
+# Bluetooth LE connection, so it needs no QIUI credentials and can be updated
+# over the air at any time.
+#
+#   esphome run qiui-ble-proxy.yaml
+#
+# Notes
+# -----
+# * Prefer an ESP32 with Ethernet (e.g. Olimex ESP32-POE) or an ESP32-S3 near
+#   the device: BLE + Wi-Fi on the original ESP32 share the radio and a weak
+#   Wi-Fi signal makes connections time out.
+# * "active: true" is what allows Home Assistant to open a GATT connection
+#   through the proxy. Without it only advertisements are forwarded.
+# * The original ESP32 supports roughly three active connections at a time,
+#   which is plenty: the integration only connects while a command runs.
+
+substitutions:
+  name: qiui-ble-proxy
+  friendly_name: QIUI BLE Proxy
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  min_version: 2024.8.0
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+
+# Enable logging (serial + network) so you can see the proxy state.
+logger:
+  level: INFO
+
+# Home Assistant API. Generate a key with `esphome config` or the ESPHome
+# dashboard and store it in secrets.yaml as `api_key`.
+api:
+  encryption:
+    key: !secret api_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Fallback access point if Wi-Fi is unavailable.
+  ap:
+    ssid: "${friendly_name} fallback"
+
+captive_portal:
+
+# Full duty cycle scanning gives the most reliable connection setup for a
+# device that is already known to Home Assistant.
+esp32_ble_tracker:
+  scan_parameters:
+    interval: 1100ms
+    window: 1100ms
+    active: true
+
+bluetooth_proxy:
+  active: true
